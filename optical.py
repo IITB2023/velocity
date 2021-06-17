@@ -86,6 +86,6 @@ def demo(model, imgs_path):
                 
             input1 = torch.from_numpy(input1).float()
             input2 = torch.from_numpy(input2).float()
-            flow_low, flow_up = model(image1, image2, iters=12, test_mode=True)
+            flow_low, flow_up = model(input1, input2, iters=12, test_mode=True)
     
     return flow_low, flow_up
