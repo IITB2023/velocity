@@ -84,8 +84,8 @@ def demo(model, imgs_path):
                 input1[i-1] = image1.cpu().numpy()
                 input2[i-1] = image2.cpu().numpy()
                 
-            input1 = torch.from_numpy(input1).float()
-            input2 = torch.from_numpy(input2).float()
+            input1 = torch.from_numpy(input1).float().to(DEVICE)
+            input2 = torch.from_numpy(input2).float().to(DEVICE)
             flow_low, flow_up = model(input1, input2, iters=12, test_mode=True)
     
     return flow_low, flow_up
