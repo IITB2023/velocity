@@ -55,8 +55,8 @@ def demo(model, imgs_path):
     model = model.module
     model.to(DEVICE)
     model.eval()
-    input1 = np.zeros(39,3,720,1280)
-    input2 = np.zeros(39,3,720,1280)
+    input1 = np.zeros((39,3,720,1280))
+    input2 = np.zeros((39,3,720,1280))
 
     with torch.no_grad():
 
