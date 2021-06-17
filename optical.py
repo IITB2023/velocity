@@ -50,20 +50,42 @@ def load_model(args):
 
 
 
-def demo(model, file1,file2):
+def demo(model, imgs_path):
     
     model = model.module
     model.to(DEVICE)
     model.eval()
+    input1 = np.zeros(39,3,720,1280)
+    input2 = np.zeros(39,3,720,1280)
 
     with torch.no_grad():
 
-            image1 = load_image(file1)
-            image2 = load_image(file2)
+            for i in range(1,40):
+                
+                one = i
+                two = i+1
+                if one<10:
+                    one = '00' + str(one) + '.jpg'
+                else:
+                    one = '0' + str(one) + '.jpg'
+                if two<10:
+                    two = '00' + str(two) + '.jpg'
+                else:
+                   two = '0' + str(two) + '.jpg'
+                file1 = imgs_path + '/' + one
+                file2 = imgs_path + '/' + two
+                
+                image1 = load_image(file1)
+                image2 = load_image(file2)
 
-            padder = InputPadder(image1.shape)
-            image1, image2 = padder.pad(image1, image2)
-
+                padder = InputPadder(image1.shape)
+                image1, image2 = padder.pad(image1, image2)
+                
+                input1[i] = image1.cpu().numpy()
+                input2[i] = image2.cpu().numpy()
+                
+            input1 = torch.from_numpy(input1).float()
+            input2 = torch.from_numpy(input2).float()
             flow_low, flow_up = model(image1, image2, iters=12, test_mode=True)
     
     return flow_low, flow_up
