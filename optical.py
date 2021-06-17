@@ -81,8 +81,8 @@ def demo(model, imgs_path):
                 padder = InputPadder(image1.shape)
                 image1, image2 = padder.pad(image1, image2)
                 
-                input1[i] = image1.cpu().numpy()
-                input2[i] = image2.cpu().numpy()
+                input1[i-1] = image1.cpu().numpy()
+                input2[i-1] = image2.cpu().numpy()
                 
             input1 = torch.from_numpy(input1).float()
             input2 = torch.from_numpy(input2).float()
