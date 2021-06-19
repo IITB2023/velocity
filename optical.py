@@ -22,6 +22,7 @@ DEVICE = 'cuda'
 
 def load_image(imfile):
     img = np.array(Image.open(imfile)).astype(np.uint8)
+    img = cv2.resize(img, (360,680)
     img = torch.from_numpy(img).permute(2, 0, 1).float()
     return img[None].to(DEVICE)
 
@@ -55,8 +56,8 @@ def demo(model, imgs_path):
     model = model.module
     model.to(DEVICE)
     model.eval()
-    input1 = np.zeros((39,3,720,1280))
-    input2 = np.zeros((39,3,720,1280))
+    input1 = np.zeros((39,3,360,640))
+    input2 = np.zeros((39,3,360,640))
 
     with torch.no_grad():
 
