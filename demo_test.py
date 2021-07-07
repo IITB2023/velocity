@@ -67,9 +67,7 @@ def test(Model, img_dir):
         img = img.transpose((2, 0, 1))
         img = torch.from_numpy(img).float()
         img = normalize(img)
-        if args.cuda and torch.cuda.is_available():
-            img = img.cuda()
-        
+        img = img.to(dev)
         _, org_h, org_w = img.shape
 
         # new height and width setting which can be divided by 16
