@@ -1,7 +1,8 @@
 import sys
 
 sys.path.append('core')
-
+import torch_xla
+import torch_xla.core.xla_model as xm
 import argparse
 import os
 import cv2
@@ -17,7 +18,7 @@ from core.utils.utils import InputPadder
 import os
 
 
-DEVICE = 'cuda'
+DEVICE = xm.xla_device()
 
 
 def load_image(imfile):
