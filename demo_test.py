@@ -9,6 +9,8 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import os
 import imageio
+import torch_xla
+import torch_xla.core.xla_model as xm
 
 class Args():
     
@@ -34,6 +36,7 @@ args = Args()
 
 os.environ["CUDA_VISIBLE_DEVICES"]= args.gpu_num
 cudnn.benchmark = True
+dev = xm.xla_device()
 
 max_depth = 80.0
 
@@ -41,7 +44,7 @@ def load_model(model_dir):
 
     Model = LDRN(args)
 
-    Model = Model.cuda()
+    Model = Model.to(dev)
     Model = torch.nn.DataParallel(Model)
     Model.load_state_dict(torch.load(model_dir))
     Model.eval()
